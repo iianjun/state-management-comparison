@@ -1,13 +1,17 @@
 {
-  "name": "@repo/ui",
+  "name": "@repo/shared",
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx"
+    "./components/*": "./src/components/*.tsx",
+    "./layouts/*": "./src/layouts/*.tsx",
+    "./types": "./src/types/index.ts",
+    "./types/*": "./src/types/*.ts",
+    "./lib/*": "./src/lib/*.ts",
+    "./styles/*": "./src/styles/*"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
@@ -17,6 +21,8 @@
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^3.4.17",
     "typescript": "5.9.2"
   },
   "dependencies": {
