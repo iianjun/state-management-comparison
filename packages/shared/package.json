@@ -3,11 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./components/*": "./src/components/*.tsx",
-    "./layouts/*": "./src/layouts/*.tsx",
-    "./types": "./src/types/index.ts",
-    "./types/*": "./src/types/*.ts",
-    "./lib/*": "./src/lib/*.ts",
+    ".": "./src/index.ts",
     "./styles/*": "./src/styles/*"
   },
   "scripts": {
@@ -17,16 +13,20 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^3.4.17",
+    "next": "^16.0.3",
+    "tailwindcss": "^4",
     "typescript": "5.9.2"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.553.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.4.0"
   }
 }
