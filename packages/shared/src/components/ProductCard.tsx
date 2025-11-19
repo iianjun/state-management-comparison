@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import React, { useContext } from "react";
 import { cn } from "../lib/utils";
+import { Skeleton } from "./Skeleton";
 
 type ProductContextType = {
   product: Product;
@@ -39,7 +40,7 @@ export function ProductCard({
         product,
       }}
     >
-      <div className={cn("space-y-1", className)} onClick={onClick}>
+      <div className={className} onClick={onClick}>
         {children}
       </div>
     </ProductContext.Provider>
@@ -59,14 +60,14 @@ ProductCard.Image = function ProductCardImage({
   return (
     <div
       className={cn(
-        "relative aspect-square bg-gray-100 rounded-lg overflow-hidden mb-2",
+        "relative aspect-square bg-gray-100 rounded-lg overflow-hidden",
         className
       )}
     >
       <Image
         width={width}
         height={height}
-        className="object-cover h-50"
+        className="object-cover w-full h-full"
         src={product.image}
         alt={product.name}
       />
@@ -107,5 +108,28 @@ ProductCard.Price = function ProductCardPrice({
     <p className={cn("text-gray-500", className)}>
       ${product.price.toFixed(2)}
     </p>
+  );
+};
+
+ProductCard.Description = function ProductCardDescription({
+  className,
+}: ProductCommonProps) {
+  const { product } = useProductContext();
+  return (
+    <p className={cn("text-gray-700", className)}>{product.description}</p>
+  );
+};
+
+ProductCard.Skeleton = function ProductCardSkeleton() {
+  return (
+    <div className="space-y-1">
+      <div className="mb-3">
+        <Skeleton className="h-50 w-50 rounded-lg" />
+      </div>
+      <Skeleton className="h-6 w-20 rounded" />
+      <Skeleton className="h-6 w-40 rounded" />
+      <Skeleton className="h-6 w-22 rounded" />
+      <Skeleton className="h-6 w-10 rounded" />
+    </div>
   );
 };
