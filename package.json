@@ -11,6 +11,7 @@
     "postinstall": "lefthook install"
   },
   "devDependencies": {
+    "@turbo/gen": "^2.6.1",
     "lefthook": "^2.0.4",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
