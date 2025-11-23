@@ -35,8 +35,7 @@ app.get("/products/:id", async (req: Request, res: Response) => {
   });
 });
 
-// 2. GET /cart/products - Get products that are in the cart
-app.get("/cart/products", async (req: Request, res: Response) => {
+app.get("/carts", async (req: Request, res: Response) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const cartProducts = products.filter((product) =>
     cartItems.includes(product.id)
@@ -44,20 +43,18 @@ app.get("/cart/products", async (req: Request, res: Response) => {
 
   res.json({
     success: true,
-    data: cartProducts,
+    data: cartProducts.map((product) => ({
+      product,
+      quantity: 1,
+    })),
   });
 });
 
-// Health check endpoint
 app.get("/health", (req: Request, res: Response) => {
   res.json({ status: "ok" });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
   console.log(`📦 Available endpoints:`);
-  console.log(`   GET http://localhost:${PORT}/products`);
-  console.log(`   GET http://localhost:${PORT}/cart/products`);
-  console.log(`   GET http://localhost:${PORT}/health`);
 });
