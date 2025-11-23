@@ -1,17 +1,21 @@
 "use client";
 
+import { addToCart } from "@/atoms/cart";
 import {
   CartBottomBar,
   ProductCard,
   QuantitySelector,
   useProduct,
 } from "@repo/shared";
+import { useSetAtom } from "jotai";
 import { use, useState } from "react";
 
 export default function Page({ params }: PageProps<"/products/[id]">) {
   const { id } = use(params);
   const { data: product } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
+
+  const addCart = useSetAtom(addToCart);
   return (
     <div className="pb-28">
       <ProductCard product={product}>
@@ -26,7 +30,10 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
           <QuantitySelector value={quantity} onChange={setQuantity} />
         </div>
       </ProductCard>
-      <CartBottomBar price={product.price * quantity} onCart={() => {}} />
+      <CartBottomBar
+        price={product.price * quantity}
+        onCart={() => addCart(product, quantity)}
+      />
     </div>
   );
 }
