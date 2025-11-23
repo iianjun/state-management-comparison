@@ -5,6 +5,4 @@ export interface CartItem {
   quantity: number;
 }
 
-export interface Cart {
-  items: CartItem[];
-}
+export type Cart = CartItem[];

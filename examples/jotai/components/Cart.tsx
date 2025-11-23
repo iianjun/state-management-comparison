@@ -1,14 +1,16 @@
 "use client";
 
-import { CartBadge, ShoppingCartIcon, useCarts } from "@repo/shared";
+import { cartItems } from "@/atoms/cart";
+import { CartBadge, ShoppingCartIcon } from "@repo/shared";
+import { useAtom } from "jotai";
 import Link from "next/link";
 import { useMemo } from "react";
 
 export default function Cart() {
-  const { data } = useCarts();
+  const [carts] = useAtom(cartItems);
   const quantity = useMemo(() => {
-    return data.reduce((acc, cart) => acc + cart.quantity, 0);
-  }, [data]);
+    return carts.reduce((acc, cart) => acc + cart.quantity, 0);
+  }, [carts]);
   return (
     <Link href="/cart" className="relative p-2">
       <ShoppingCartIcon className="w-6 h-6" />

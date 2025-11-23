@@ -1,3 +1,4 @@
+import HydrateCartAtom from "@/components/HydrateCartAtom";
 import { getCarts, getQueryClient, Hydrate } from "@repo/shared";
 
 export default async function Layout({
@@ -10,5 +11,9 @@ export default async function Layout({
     queryKey: ["carts"],
     queryFn: getCarts,
   });
-  return <Hydrate client={queryClient}>{children}</Hydrate>;
+  return (
+    <HydrateCartAtom>
+      <Hydrate client={queryClient}>{children}</Hydrate>
+    </HydrateCartAtom>
+  );
 }

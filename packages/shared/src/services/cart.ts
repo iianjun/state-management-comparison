@@ -1,10 +1,10 @@
-import { ApiResponse, CartItem } from "../types";
+import { ApiResponse, Cart } from "../types";
 
-export const getCarts = async () => {
+export const getCarts = async (): Promise<ApiResponse<Cart>> => {
   const response = await fetch("http://localhost:4000/carts");
   if (!response.ok) {
     throw new Error("Failed to fetch carts");
   }
-  const data = (await response.json()) as ApiResponse<CartItem[]>;
+  const data = (await response.json()) as ApiResponse<Cart>;
   return data;
 };
