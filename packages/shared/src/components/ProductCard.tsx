@@ -38,8 +38,7 @@ export function ProductCard({
     <ProductContext.Provider
       value={{
         product,
-      }}
-    >
+      }}>
       <div className={className} onClick={onClick}>
         {children}
       </div>
@@ -60,14 +59,13 @@ ProductCard.Image = function ProductCardImage({
   return (
     <div
       className={cn(
-        "relative aspect-square bg-gray-100 rounded-lg overflow-hidden",
+        "relative aspect-square overflow-hidden rounded-lg bg-gray-100",
         className
-      )}
-    >
+      )}>
       <Image
         width={width}
         height={height}
-        className="object-cover w-full h-full"
+        className="h-full w-full object-cover"
         src={product.image}
         alt={product.name}
       />
@@ -93,7 +91,7 @@ ProductCard.Rating = function ProductCardRating({
   const { product } = useProductContext();
   return (
     <div className={cn("flex items-center gap-1", className)}>
-      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
       <span>{product.rating}</span>
       <span className="text-gray-500">({product.reivewCount})</span>
     </div>
@@ -140,7 +138,7 @@ ProductCard.Delete = function ProductCardDelete({
 }: ProductCommonProps & { onDelete?: () => void }) {
   return (
     <button onClick={onDelete} className={cn("self-start p-2", className)}>
-      <Trash2 className="w-5 h-5 text-red-500" />
+      <Trash2 className="h-5 w-5 text-red-500" />
     </button>
   );
 };

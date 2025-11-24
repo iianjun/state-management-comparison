@@ -3,7 +3,7 @@ interface HeaderProps {
 }
 export function Header({ children }: HeaderProps) {
   return (
-    <header className="p-4 flex justify-between items-center border-b border-gray-200">
+    <header className="flex items-center justify-between border-b border-gray-200 p-4">
       {children}
     </header>
   );

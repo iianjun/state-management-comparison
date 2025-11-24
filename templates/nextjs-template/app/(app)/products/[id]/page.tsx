@@ -16,7 +16,7 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
     <div className="pb-28">
       <ProductCard product={product}>
         <ProductCard.Image width={448} height={448} className="rounded-none" />
-        <div className="p-4 space-y-4">
+        <div className="space-y-4 p-4">
           <div>
             <ProductCard.Category className="mb-1" />
             <ProductCard.Name className="mb-2" />
