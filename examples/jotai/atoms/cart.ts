@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
-import { Cart, Product } from '@repo/shared';
+import { atom } from "jotai";
+import { Cart, Product } from "@repo/shared";
 
 export const cartItems = atom<Cart>([]);
 

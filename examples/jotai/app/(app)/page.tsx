@@ -10,7 +10,7 @@ export default function Home() {
         <h1>My shop</h1>
         <Cart />
       </Header>
-      <div className="grid grid-cols-2 p-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 p-4">
         {isLoading &&
           Array.from({ length: 10 }).map((_, index) => (
             <ProductCard.Skeleton key={index} />

@@ -59,8 +59,8 @@ const addCart = useSetAtom(addToCart); // 쓰기만
 Next.js App Router와의 통합이 매끄럽습니다. `jotai/utils`의 `useHydrateAtoms`를 사용하면 서버에서 prefetch한 데이터로 atom을 초기화할 수 있습니다:
 
 ```typescript
-'use client';
-import { useHydrateAtoms } from 'jotai/utils';
+"use client";
+import { useHydrateAtoms } from "jotai/utils";
 
 export default function HydrateCartAtom({ children }) {
   const { data: cart } = useCarts();

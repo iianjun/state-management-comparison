@@ -1,16 +1,16 @@
-'use client';
+"use client";
 import {
   cartItems,
   deleteCart,
   totalPrice,
   updateQuantity,
-} from '@/atoms/cart';
+} from "@/atoms/cart";
 import {
   CartCheckoutBottomBar,
   ProductCard,
   QuantitySelector,
-} from '@repo/shared';
-import { useAtomValue, useSetAtom } from 'jotai';
+} from "@repo/shared";
+import { useAtomValue, useSetAtom } from "jotai";
 
 export default function CartPage() {
   const items = useAtomValue(cartItems);

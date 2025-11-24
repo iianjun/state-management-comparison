@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { addToCart } from '@/atoms/cart';
+import { addToCart } from "@/atoms/cart";
 import {
   CartBottomBar,
   ProductCard,
   QuantitySelector,
   useProduct,
-} from '@repo/shared';
-import { useSetAtom } from 'jotai';
-import { use, useState } from 'react';
+} from "@repo/shared";
+import { useSetAtom } from "jotai";
+import { use, useState } from "react";
 
-export default function Page({ params }: PageProps<'/products/[id]'>) {
+export default function Page({ params }: PageProps<"/products/[id]">) {
   const { id } = use(params);
   const { data: product } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
