@@ -6,6 +6,7 @@ export { Hydrate } from "./components/Hydrate";
 export { QuantitySelector } from "./components/QuantitySelector";
 export { CartBottomBar } from "./components/CartBottomBar";
 export { CartBadge } from "./components/CartBadge";
+export { CartCheckoutBottomBar } from "./components/CartCheckoutBottomBar";
 
 // Types
 export * from "./types";

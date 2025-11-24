@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "../types";
-import { Star } from "lucide-react";
+import { Star, Trash2 } from "lucide-react";
 import Image from "next/image";
 import React, { useContext } from "react";
 import { cn } from "../lib/utils";
@@ -131,5 +131,16 @@ ProductCard.Skeleton = function ProductCardSkeleton() {
       <Skeleton className="h-6 w-22 rounded" />
       <Skeleton className="h-6 w-10 rounded" />
     </div>
+  );
+};
+
+ProductCard.Delete = function ProductCardDelete({
+  className,
+  onDelete,
+}: ProductCommonProps & { onDelete?: () => void }) {
+  return (
+    <button onClick={onDelete} className={cn("self-start p-2", className)}>
+      <Trash2 className="w-5 h-5 text-red-500" />
+    </button>
   );
 };

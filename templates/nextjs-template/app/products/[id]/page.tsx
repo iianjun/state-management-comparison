@@ -23,7 +23,10 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
             <ProductCard.Rating className="mb-3" />
             <ProductCard.Description />
           </div>
-          <QuantitySelector value={quantity} onChange={setQuantity} />
+          <div className="flex items-center gap-4">
+            <span>Quantity:</span>
+            <QuantitySelector value={quantity} onChange={setQuantity} />
+          </div>
         </div>
       </ProductCard>
       <CartBottomBar price={product.price * quantity} onCart={() => {}} />

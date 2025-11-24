@@ -1,5 +1,5 @@
-import { atom } from "jotai";
-import { Cart, Product } from "@repo/shared";
+import { atom } from 'jotai';
+import { Cart, Product } from '@repo/shared';
 
 export const cartItems = atom<Cart>([]);
 
@@ -39,11 +39,11 @@ export const addToCart = atom(
   }
 );
 
-export const deleteCart = atom(null, (get, set, product: Product) => {
+export const deleteCart = atom(null, (get, set, productId: number) => {
   const items = get(cartItems);
   set(
     cartItems,
-    items.filter((item) => item.product.id !== product.id)
+    items.filter((item) => item.product.id !== productId)
   );
 });
 
