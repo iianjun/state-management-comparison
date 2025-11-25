@@ -11,8 +11,11 @@ import Link from "next/link";
 export default async function Layout({
   children,
   params,
-}: LayoutProps<"/products/[id]">) {
-  const { id } = await params;
+}: {
+  params: { id: string };
+  children: React.ReactNode;
+}) {
+  const { id } = params;
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["products", id],

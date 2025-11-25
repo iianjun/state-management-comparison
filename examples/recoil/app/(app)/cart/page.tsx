@@ -1,10 +1,30 @@
 "use client";
-import { CartCheckoutBottomBar } from "@repo/shared";
+import { cartState, totalPriceState } from "@/atoms/cart";
+import {
+  CartCheckoutBottomBar,
+  ProductCard,
+  QuantitySelector,
+} from "@repo/shared";
+import { useRecoilState, useRecoilValue } from "recoil";
 export default function CartPage() {
+  const [cart, setCart] = useRecoilState(cartState);
+  const totalPrice = useRecoilValue(totalPriceState);
+
+  const handleQuantityChange = (id: number, quantity: number) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.product.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+  const handleRemoveItem = (id: number) => {
+    setCart((prev) => prev.filter((item) => item.product.id !== id));
+  };
   return (
     <div className="min-h-screen pb-32">
       <div className="space-y-4 p-4">
-        {/* <ProductCard
+        {cart.map((item) => (
+          <ProductCard
             key={item.product.id}
             product={item.product}
             className="flex gap-4 border-b border-gray-200 pb-4">
@@ -19,18 +39,19 @@ export default function CartPage() {
               <QuantitySelector
                 className="w-fit"
                 value={item.quantity}
-                onChange={(quantity) =>
-                  updateQuantityValue(item.product.id, quantity)
-                }
+                onChange={(quantity) => {
+                  handleQuantityChange(item.product.id, quantity);
+                }}
                 size="sm"
               />
             </div>
             <ProductCard.Delete
-              onDelete={() => deleteCartItem(item.product.id)}
+              onDelete={() => handleRemoveItem(item.product.id)}
             />
-          </ProductCard> */}
+          </ProductCard>
+        ))}
       </div>
-      <CartCheckoutBottomBar total={0} shipping={0} />
+      <CartCheckoutBottomBar total={totalPrice} shipping={0} />
     </div>
   );
 }

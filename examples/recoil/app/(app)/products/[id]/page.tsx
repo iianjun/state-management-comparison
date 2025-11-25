@@ -1,17 +1,33 @@
 "use client";
 
+import { cartState } from "@/atoms/cart";
 import {
   CartBottomBar,
   ProductCard,
   QuantitySelector,
   useProduct,
 } from "@repo/shared";
-import { use, useState } from "react";
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 
-export default function Page({ params }: PageProps<"/products/[id]">) {
-  const { id } = use(params);
+export default function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
   const { data: product } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
+  const setCart = useSetRecoilState(cartState);
+
+  const handleAddCart = () => {
+    setCart((prev) => {
+      if (prev.some((item) => item.product.id === Number(id))) {
+        return prev.map((item) =>
+          item.product.id === Number(id)
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+      return [...prev, { product, quantity }];
+    });
+  };
   return (
     <div className="pb-28">
       <ProductCard product={product}>
@@ -29,7 +45,7 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
           </div>
         </div>
       </ProductCard>
-      <CartBottomBar price={product.price * quantity} onCart={() => {}} />
+      <CartBottomBar price={product.price * quantity} onCart={handleAddCart} />
     </div>
   );
 }
