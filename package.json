@@ -28,13 +28,11 @@
     "*.json": [
       "prettier --write"
     ],
-    "/examples/**/*.{js,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
+    "examples/**/*.{js,ts,tsx}": [
+      "prettier --write"
     ],
-    "/packages/**/*.{js,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
+    "packages/**/*.{js,ts,tsx}": [
+      "prettier --write"
     ]
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 import { cartState } from "@/atoms/cart";
-import { Cart, useCarts } from "@repo/shared";
+import { useCarts } from "@repo/shared";
 import { RecoilRoot } from "recoil";
 
 export default function RecoilHydrateCartAtom({

@@ -2,6 +2,8 @@ pre-commit:
   commands:
     lint-staged:
       run: pnpm exec lint-staged
+    lint:
+      run: pnpm lint
 pre-push:
   commands:
     type-check:
