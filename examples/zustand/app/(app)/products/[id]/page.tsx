@@ -1,5 +1,6 @@
 "use client";
 
+import { useCartStore } from "@/stores/cart";
 import {
   CartBottomBar,
   ProductCard,
@@ -12,6 +13,7 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
   const { id } = use(params);
   const { data: product } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
+  const addToCart = useCartStore.use.addToCart();
   return (
     <div className="pb-28">
       <ProductCard product={product}>
@@ -29,7 +31,10 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
           </div>
         </div>
       </ProductCard>
-      <CartBottomBar price={product.price * quantity} onCart={() => {}} />
+      <CartBottomBar
+        price={product.price * quantity}
+        onCart={() => addToCart(product, quantity)}
+      />
     </div>
   );
 }
