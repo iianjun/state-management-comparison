@@ -1,12 +1,12 @@
 "use client";
+import { useCartStore } from "@/providers/cart-store-provider";
 import {
   CartCheckoutBottomBar,
   ProductCard,
   QuantitySelector,
 } from "@repo/shared";
-import { useCartStore } from "@/stores/cart";
 export default function CartPage() {
-  const items = useCartStore.use.items();
+  const items = useCartStore((state) => state.items);
   const total = useCartStore((state) =>
     state.items.reduce(
       (acc, item) => acc + item.quantity * item.product.price,
@@ -14,8 +14,8 @@ export default function CartPage() {
     )
   );
 
-  const updateQuantity = useCartStore.use.updateQuantity();
-  const deleteCartItem = useCartStore.use.removeFromCart();
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const deleteCartItem = useCartStore((state) => state.removeFromCart);
   return (
     <div className="min-h-screen pb-32">
       <div className="space-y-4 p-4">

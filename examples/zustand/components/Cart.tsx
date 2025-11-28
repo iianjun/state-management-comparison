@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/stores/cart";
+import { useCartStore } from "@/providers/cart-store-provider";
 import { CartBadge, ShoppingCartIcon } from "@repo/shared";
 import Link from "next/link";
 
