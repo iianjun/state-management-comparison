@@ -1,5 +1,5 @@
 "use client";
-import { cartStore } from "@/stores/cart";
+import { useCartStore } from "@/hooks/useCartStore";
 import {
   CartCheckoutBottomBar,
   ProductCard,
@@ -7,6 +7,7 @@ import {
 } from "@repo/shared";
 import { observer } from "mobx-react-lite";
 export default observer(function CartPage() {
+  const cartStore = useCartStore();
   return (
     <div className="min-h-screen pb-32">
       <div className="space-y-4 p-4">

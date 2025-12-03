@@ -1,6 +1,6 @@
 "use client";
 
-import { cartStore } from "@/stores/cart";
+import { useCartStore } from "@/hooks/useCartStore";
 import {
   CartBottomBar,
   ProductCard,
@@ -13,6 +13,7 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
   const { id } = use(params);
   const { data: product } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
+  const cartStore = useCartStore();
   return (
     <div className="pb-28">
       <ProductCard product={product}>

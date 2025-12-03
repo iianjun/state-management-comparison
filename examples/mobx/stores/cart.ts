@@ -1,9 +1,19 @@
 import { makeObservable, observable, action, computed } from "mobx";
 import { Cart as CartType, Product } from "@repo/shared";
-class Cart {
+import { enableStaticRendering } from "mobx-react-lite";
+
+const isServer = typeof window === "undefined";
+// 서버쪽에서 렌더링이 발생해 memory leak를 방지
+/**
+ * If observer is used in server side rendering context; make sure to call enableStaticRendering(true),
+ * so that observer won't subscribe to any observables used, and no GC problems are introduced.
+ */
+enableStaticRendering(isServer);
+// mobx recommends "mutable" states
+export class Cart {
   items: CartType = [];
 
-  constructor() {
+  constructor(cart?: CartType) {
     makeObservable(this, {
       items: observable,
       totalQuantity: computed,
@@ -12,6 +22,9 @@ class Cart {
       removeFromCart: action,
       updateQuantity: action,
     });
+    if (cart) {
+      this.items = cart;
+    }
   }
 
   get totalQuantity() {
@@ -36,13 +49,17 @@ class Cart {
     }
   }
   removeFromCart(productId: number) {
-    this.items = this.items.filter((item) => item.product.id !== productId);
+    const removeIndex = this.items.findIndex(
+      (item) => item.product.id === productId
+    );
+    if (removeIndex === -1) return;
+    this.items.splice(removeIndex, 1);
   }
   updateQuantity(productId: number, quantity: number) {
-    this.items = this.items.map((item) =>
-      item.product.id === productId ? { ...item, quantity } : item
+    const existingItem = this.items.find(
+      (item) => item.product.id === productId
     );
+    if (!existingItem) return;
+    existingItem.quantity = quantity;
   }
 }
-
-export const cartStore = new Cart();
