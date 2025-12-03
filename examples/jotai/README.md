@@ -17,18 +17,18 @@ Jotai를 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
 
 ### 1. 간편함
 
-Jotai는 매우 간단합니다. Redux처럼 action, reducer, dispatch 패턴을 따를 필요 없이, 단순히 `atom()`으로 상태를 정의하면 끝입니다.
+Jotai는 매우 간단하다. Redux처럼 action, reducer, dispatch 패턴을 따를 필요 없이, 단순히 `atom()`으로 상태를 정의하면 끝이다.
 
 ```typescript
-// 이게 전부입니다
+// 이게 전부다
 export const cartItems = atom<Cart>([]);
 ```
 
-보일러플레이트가 거의 없어서 작은 프로젝트부터 바로 적용하기 좋습니다.
+보일러플레이트가 거의 없어서 작은 프로젝트부터 바로 적용하기 좋다.
 
 ### 2. Getter와 Setter 분리
 
-Jotai의 가장 마음에 들었던 부분입니다. 읽기 전용 atom과 쓰기 전용 atom을 명확하게 분리할 수 있습니다:
+Jotai의 가장 마음에 들었던 부분이다. 읽기 전용 atom과 쓰기 전용 atom을 명확하게 분리할 수 있다:
 
 ```typescript
 // Read-only (Getter) - 계산된 값
@@ -45,18 +45,18 @@ export const addToCart = atom(null, (get, set, product: Product) => {
 });
 ```
 
-컴포넌트에서도 필요에 따라 분리해서 사용할 수 있습니다:
+컴포넌트에서도 필요에 따라 분리해서 사용할 수 있다:
 
 ```typescript
 const quantity = useAtomValue(totalQuantity); // 읽기만
 const addCart = useSetAtom(addToCart); // 쓰기만
 ```
 
-이렇게 하면 불필요한 리렌더링을 방지할 수 있고, 코드의 의도가 명확해집니다.
+이렇게 하면 불필요한 리렌더링을 방지할 수 있고, 코드의 의도가 명확해진다.
 
 ### 3. SSR 지원
 
-Next.js App Router와의 통합이 매끄럽습니다. `jotai/utils`의 `useHydrateAtoms`를 사용하면 서버에서 prefetch한 데이터로 atom을 초기화할 수 있습니다:
+Next.js App Router와의 통합이 매끄럽다. `jotai/utils`의 `useHydrateAtoms`를 사용하면 서버에서 prefetch한 데이터로 atom을 초기화할 수 있다:
 
 ```typescript
 "use client";
@@ -69,15 +69,15 @@ export default function HydrateCartAtom({ children }) {
 }
 ```
 
-별도의 Provider 설정 없이도 동작하고, 필요할 때만 Provider를 추가하면 됩니다.
+별도의 Provider 설정 없이도 동작하고, 필요할 때만 Provider를 추가하면 된다.
 
 ### 4. 작은 번들 사이즈
 
-Core 패키지가 매우 가볍습니다 (~5KB gzipped).
+Core 패키지가 매우 가볍다 (~5KB gzipped).
 
 ### 5. TypeScript 친화적
 
-타입 추론이 잘 되어서 별도의 타입 정의 없이도 대부분 자동으로 처리됩니다.
+타입 추론이 잘 되어서 별도의 타입 정의 없이도 대부분 자동으로 처리된다.
 
 ## 프로젝트 구조
 
@@ -106,13 +106,13 @@ pnpm install
 pnpm dev
 ```
 
-[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
+Visit [http://localhost:3000](http://localhost:3000)
 
 ## 결론
 
-Jotai의 atomic한 approach를 통해 보일러플레이트가 거의 없이 바로 사용이 가능했습니다.
-또한 SSR hydration도 쉽게 지원해 어려움 없이 SSR도 구현할 수 있었습니다.
+Jotai의 atomic한 approach를 통해 보일러플레이트가 거의 없이 바로 사용이 가능했다.
+또한 SSR hydration도 쉽게 지원해 어려움 없이 SSR도 구현할 수 있었다.
 
-또 좋았던 점은 Derived atoms으로 기존 atom을 활용해 계산된 값을 따로 만들어 리렌더링을 최적화할 수 있었고, 방법도 매우 직관적이었습니다.
+또 좋았던 점은 Derived atoms으로 기존 atom을 활용해 계산된 값을 따로 만들어 리렌더링을 최적화할 수 있었고, 방법도 매우 직관적이었다.
 
-사용하진 못했지만 다양한 extension을 지원합니다. (jotai-tanstack-query, jotai-immer 등)
+사용하진 못했지만 다양한 extension을 지원한다. (jotai-tanstack-query, jotai-immer 등)

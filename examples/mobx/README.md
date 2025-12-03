@@ -18,7 +18,7 @@ MobX를 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
 
 ### 1. 보일러플레이트가 많다
 
-MobX는 세팅해야 할 것들이 꽤 많습니다.
+MobX는 세팅해야 할 것들이 꽤 많다.
 
 ```typescript
 export class Cart {
@@ -42,11 +42,11 @@ export class Cart {
 }
 ```
 
-또한 React에서 사용하려면 `mobx` 패키지만으로는 부족하고, `mobx-react-lite` 또는 `mobx-react`를 별도로 설치해야 합니다. 이 점이 조금 불편했습니다.
+또한 React에서 사용하려면 `mobx` 패키지만으로는 부족하고, `mobx-react-lite` 또는 `mobx-react`를 별도로 설치해야 한다. 이 점이 조금 불편했다.
 
 ### 2. SSR 지원이 없어 Context API 사용 필요
 
-Jotai나 Recoil처럼 SSR을 위한 내장 컴포넌트나 Hook이 없습니다. Zustand처럼 Context API를 직접 구현해야 합니다:
+Jotai나 Recoil처럼 SSR을 위한 내장 컴포넌트나 Hook이 없다. Zustand처럼 Context API를 직접 구현해야 한다:
 
 ```typescript
 export const StoreProvider = ({ children }: React.PropsWithChildren) => {
@@ -69,7 +69,7 @@ export const StoreProvider = ({ children }: React.PropsWithChildren) => {
 
 ### 3. 클래스 기반 아키텍처
 
-MobX는 클래스 기반 OOP 스타일을 권장합니다:
+MobX는 클래스 기반 OOP 스타일을 권장한다:
 
 ```typescript
 // MobX - 클래스 기반
@@ -99,7 +99,7 @@ const cartStore = new Cart(initialData);
 
 ### 4. 명확한 구조: State, Action, Derivations
 
-MobX는 크게 세 가지 개념으로 구성됩니다:
+MobX는 크게 세 가지 개념으로 구성된다:
 
 - **State** (observable): Zustand의 state와 비슷
 - **Action**: Zustand의 setter와 비슷
@@ -128,11 +128,11 @@ export class Cart {
 }
 ```
 
-Zustand는 derived state를 선언적으로 정의할 수 없었지만, MobX는 `get totalQuantity`처럼 getter로 명시적으로 정의할 수 있어 편리합니다.
+Zustand는 derived state를 선언적으로 정의할 수 없었지만, MobX는 `get totalQuantity`처럼 getter로 명시적으로 정의할 수 있어 편리하다.
 
 ### 5. Mutable State 권장
 
-MobX는 Proxy를 사용하기 때문에 **mutable state**를 권장합니다:
+MobX는 Proxy를 사용하기 때문에 **mutable state**를 권장한다:
 
 ```typescript
 // MobX 스타일 (mutable)
@@ -143,11 +143,11 @@ this.items.push({ product, quantity });
 set({ items: [...items, { product, quantity }] });
 ```
 
-명시적이고 직관적인 면이 있습니다. 하지만 주의할 점이 있습니다.
+명시적이고 직관적인 면이 있다. 하지만 주의할 점이 있다.
 
 ### 6. 디버깅과 Proxy
 
-MobX는 내부적으로 Proxy를 사용해 변경을 감지합니다. 이로 인해:
+MobX는 내부적으로 Proxy를 사용해 변경을 감지한다. 이로 인해:
 
 **장점:**
 - Mutable한 코드 작성이 가능 (`item.quantity++`)
@@ -158,11 +158,11 @@ MobX는 내부적으로 Proxy를 사용해 변경을 감지합니다. 이로 인
 - DevTools에서 객체 구조를 파악하기 어려울 때가 있음
 - Immutable 패턴에 익숙한 개발자에게는 mutable 방식이 오히려 혼란스러울 수 있음
 
-Zustand는 immutable 업데이트로 명확한 데이터 흐름을 제공하는 반면, MobX는 편리하지만 "어디서 변경됐지?"를 추적하기 어려울 수 있습니다.
+Zustand는 immutable 업데이트로 명확한 데이터 흐름을 제공하는 반면, MobX는 편리하지만 "어디서 변경됐지?"를 추적하기 어려울 수 있다.
 
 ### 7. observer로 감싸야 리렌더링 감지
 
-Zustand처럼 주소값(참조)을 확인해 리렌더링 여부를 판단하지만, MobX에서 mutable하게 변경하면 주소값이 바뀌지 않아 리렌더링이 자동으로 일어나지 않습니다.
+Zustand처럼 주소값(참조)을 확인해 리렌더링 여부를 판단하지만, MobX에서 mutable하게 변경하면 주소값이 바뀌지 않아 리렌더링이 자동으로 일어나지 않는다.
 
 그래서:
 
@@ -185,11 +185,11 @@ export default observer(function Cart() {
 });
 ```
 
-매번 `observer`로 감싸야 한다는 점이 조금 불편합니다. 특히:
+매번 `observer`로 감싸야 한다는 점이 조금 불편하다. 특히:
 
-- **Action만 호출할 때는 observer가 불필요**: 컴포넌트에서 state를 읽지 않고 action만 호출한다면 observer가 필요 없습니다.
-- **State를 읽을 때는 observer 필수**: 하지만 `cartStore.totalQuantity` 같은 state를 읽는다면 반드시 observer로 감싸야 합니다.
-- **유지보수 어려움**: 나중에 리팩토링하면서 state 참조를 제거했는데 observer를 삭제하는 걸 깜빡할 수 있습니다. 반대로 새로 state를 추가했는데 observer를 감싸지 않으면 리렌더링이 안 되는 버그가 발생합니다.
+- **Action만 호출할 때는 observer가 불필요**: 컴포넌트에서 state를 읽지 않고 action만 호출한다면 observer가 필요 없다.
+- **State를 읽을 때는 observer 필수**: 하지만 `cartStore.totalQuantity` 같은 state를 읽는다면 반드시 observer로 감싸야 한다.
+- **유지보수 어려움**: 나중에 리팩토링하면서 state 참조를 제거했는데 observer를 삭제하는 걸 깜빡할 수 있다. 반대로 새로 state를 추가했는데 observer를 감싸지 않으면 리렌더링이 안 되는 버그가 발생한다.
 
 ```typescript
 // observer 필요 없음 - action만 호출
@@ -205,11 +205,11 @@ const Cart = observer(function Cart() {
 });
 ```
 
-이런 규칙을 개발자가 항상 기억하고 있어야 해서 실수하기 쉽습니다.
+이런 규칙을 개발자가 항상 기억하고 있어야 해서 실수하기 쉽다.
 
 ### 8. Reaction: Side Effect 처리
 
-MobX에는 `autorun`이라는 함수로 state 변경 시 side effect를 감지하는 **"reaction"** 개념이 있습니다:
+MobX에는 `autorun`이라는 함수로 state 변경 시 side effect를 감지하는 **"reaction"** 개념이 있다:
 
 ```typescript
 import { autorun } from "mobx";
@@ -220,7 +220,7 @@ autorun(() => {
 });
 ```
 
-이 프로젝트에서는 사용하지 않았지만, 디버깅이나 로깅에 유용할 것 같습니다.
+이 프로젝트에서는 사용하지 않았지만, 디버깅이나 로깅에 유용할 것 같다.
 
 ## 프로젝트 구조
 
@@ -254,20 +254,20 @@ pnpm install
 pnpm dev
 ```
 
-[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
+Visit [http://localhost:3000](http://localhost:3000)
 
 ## 결론
 
-MobX는 명시적인 구조(state, action, derivations)와 mutable한 상태 관리로 직관적인 면이 있습니다. 특히 computed getter로 derived state를 선언적으로 정의할 수 있는 점이 좋았습니다.
+MobX는 명시적인 구조(state, action, derivations)와 mutable한 상태 관리로 직관적인 면이 있다. 특히 computed getter로 derived state를 선언적으로 정의할 수 있는 점이 좋았다.
 
-하지만 **보일러플레이트가 많고**(`makeObservable`, `observer` 등), 별도의 `mobx-react-lite` 설치가 필요하며, **SSR 지원이 내장되어 있지 않아** Context API를 직접 구현해야 하는 점은 아쉬웠습니다.
+하지만 **보일러플레이트가 많고**(`makeObservable`, `observer` 등), 별도의 `mobx-react-lite` 설치가 필요하며, **SSR 지원이 내장되어 있지 않아** Context API를 직접 구현해야 하는 점은 아쉬웠다.
 
-**Mutable state**를 사용하면 매번 `observer`로 컴포넌트를 감싸야 변경 감지가 되는데, 이를 깜빡하면 버그가 발생할 수 있어 주의가 필요합니다.
+**Mutable state**를 사용하면 매번 `observer`로 컴포넌트를 감싸야 변경 감지가 되는데, 이를 깜빡하면 버그가 발생할 수 있어 주의가 필요하다.
 
-**러닝 커브**도 있는 편입니다. `observable`, `action`, `computed`, `makeObservable`, `observer` 등 배워야 할 개념이 많고, 각 상황에 맞는 사용법을 익혀야 합니다. Zustand나 Jotai처럼 "그냥 쓰면 된다"는 느낌과는 거리가 있습니다.
+**러닝 커브**도 있는 편이다. `observable`, `action`, `computed`, `makeObservable`, `observer` 등 배워야 할 개념이 많고, 각 상황에 맞는 사용법을 익혀야 한다. Zustand나 Jotai처럼 "그냥 쓰면 된다"는 느낌과는 거리가 있다.
 
-**클래스 기반 OOP 스타일**은 호불호가 갈릴 것 같습니다. OOP에 익숙하면 좋지만, 최근 React의 함수형 트렌드와는 맞지 않는 느낌입니다.
+**클래스 기반 OOP 스타일**은 호불호가 갈릴 것 같다. OOP에 익숙하면 좋지만, 최근 React의 함수형 트렌드와는 맞지 않는 느낌이다.
 
-**Proxy 기반 변경 감지**는 편리하지만, 디버깅 시 실제 객체 구조를 파악하기 어렵고, immutable 패턴에 익숙한 개발자에게는 오히려 혼란스러울 수 있습니다.
+**Proxy 기반 변경 감지**는 편리하지만, 디버깅 시 실제 객체 구조를 파악하기 어렵고, immutable 패턴에 익숙한 개발자에게는 오히려 혼란스러울 수 있다.
 
-종합적으로, MobX는 강력하지만 "쉽고 간단하다"고는 할 수 없었습니다. 작은 프로젝트에서는 오버엔지니어링일 수 있고, 대규모 프로젝트에서 OOP 스타일이 필요할 때 더 적합할 것 같습니다.
+종합적으로, MobX는 강력하지만 "쉽고 간단하다"고는 할 수 없었다. 작은 프로젝트에서는 오버엔지니어링일 수 있고, 대규모 프로젝트에서 OOP 스타일이 필요할 때 더 적합할 것 같다.
