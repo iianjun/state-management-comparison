@@ -1,8 +1,10 @@
 # Recoil E-Commerce Example
 
-Recoil을 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
+[한국어](README.ko.md)
 
-> 이 프로젝트는 다양한 상태 관리 라이브러리(Redux, MobX, Zustand 등)를 비교하기 위한 시리즈 중 하나입니다.
+A simple e-commerce state management example using Recoil.
+
+> This project is part of a series comparing various state management libraries (Redux, MobX, Zustand, etc.).
 
 ## Tech Stack
 
@@ -13,21 +15,21 @@ Recoil을 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
 - TypeScript
 - Tailwind CSS
 
-## Recoil을 사용하면서 느낀 점
+## Impressions of Using Recoil
 
-### 1. 버전 호환성 문제
+### 1. Version Compatibility Issues
 
-Recoil을 사용하기 위해서는 Next.js를 14 버전으로, React를 18로 다운그레이드해야 했다. 아직 최신 Next.js 16과 React 19를 지원하지 않는 것으로 보인다. 즉, **유지보수가 활발하지 않다**는 뜻이다.
+To use Recoil, I had to downgrade Next.js to version 14 and React to 18. It doesn't support the latest Next.js 16 and React 19 yet. This means **maintenance isn't active**.
 
-실제로 공식 문서를 보면 아직 **'experimental' 단계**라고 명시되어 있다. 따라서 atomic state management approach가 필요하다면 Jotai가 더 나은 선택일 수 있다.
+The official documentation still states it's in **'experimental' stage**. If you need an atomic state management approach, Jotai might be a better choice.
 
-### 2. 번들 사이즈
+### 2. Bundle Size
 
-gzip 기준 **23.5KB**로 Jotai(~5KB)보다 4배 이상 크기가 크다.
+At **23.5KB** gzipped, it's over 4 times larger than Jotai (~5KB).
 
-### 3. Selector를 통한 최적화
+### 3. Optimization via Selectors
 
-Jotai와 마찬가지로 `selector`를 사용해 기존 atom을 활용한 계산된 값(derived state)을 만들 수 있다:
+Like Jotai, you can use `selector` to create derived state using existing atoms:
 
 ```typescript
 export const totalQuantityState = selector({
@@ -39,50 +41,50 @@ export const totalQuantityState = selector({
 });
 ```
 
-이를 통해 불필요한 리렌더링을 줄이고 상태 로직을 분리할 수 있다.
+This reduces unnecessary re-renders and separates state logic.
 
-### 4. Write-only Atom 부재
+### 4. No Write-only Atoms
 
-Jotai에서는 write-only atom을 만들 수 있지만, Recoil의 `selector`는 `get`이 required다. 따라서 **read-only**와 **read/write** 두 가지만 지원하며, write-only는 지원하지 않는다.
+While Jotai supports write-only atoms, Recoil's `selector` requires `get`. It only supports **read-only** and **read/write**, not write-only.
 
-이로 인해 상태 변경 로직만 분리하고 싶을 때 Jotai처럼 깔끔하게 처리하기 어렵다.
+This makes it harder to cleanly separate state update logic like in Jotai.
 
-### 5. Advanced API
+### 5. Advanced APIs
 
-Jotai보다 좀 더 advanced한 API를 제공한다. 예를 들어:
+Recoil provides more advanced APIs than Jotai. For example:
 
-- **Snapshot**: Recoil atom의 전체 상태를 한 번에 읽거나 조작할 수 있다
-- **useRecoilCallback**: 컴포넌트 외부에서 atom 값을 읽거나 쓰는 커스텀 콜백을 만들 수 있다
-- **useRecoilTransaction**: 여러 atom을 동시에 업데이트하는 트랜잭션을 만들 수 있다
+- **Snapshot**: Read or manipulate entire Recoil atom state at once
+- **useRecoilCallback**: Create custom callbacks to read/write atom values outside components
+- **useRecoilTransaction**: Create transactions that update multiple atoms simultaneously
 
-이러한 API들은 복잡한 상태 관리 시나리오에서 유용할 수 있다. (참고: Jotai도 `atomEffect`/`onMount`로 라이프사이클 관리가 가능하다)
+These APIs can be useful in complex state management scenarios. (Note: Jotai also has lifecycle management via `atomEffect`/`onMount`)
 
-### 6. 개발자 경험
+### 6. Developer Experience
 
-Meta 팀에서 만들었고 현재까지도 production에서 많이 사용되고 있기 때문에 **안정성은 검증**되었다고 생각한다. 개발자 도구와의 통합도 잘 되어 있어 디버깅이 용이하다.
+Created by Meta and still widely used in production, I believe its **stability is proven**. Good integration with developer tools makes debugging easy.
 
-## 프로젝트 구조
+## Project Structure
 
 ```
 atoms/
-└── cart.ts          # 장바구니 관련 모든 atom/selector 정의
+└── cart.ts          # All cart-related atom/selector definitions
 
 components/
-├── Cart.tsx                  # 장바구니 아이콘 (총 수량 표시)
+├── Cart.tsx                  # Cart icon (displays total quantity)
 ├── RecoilWrapper.tsx         # RecoilRoot Provider
-└── RecoilHydrateCartAtom.tsx # SSR hydration 처리
+└── RecoilHydrateCartAtom.tsx # SSR hydration handling
 
 app/
-├── layout.tsx       # 루트 레이아웃
+├── layout.tsx       # Root layout
 └── (app)/
-    ├── page.tsx     # 상품 목록
+    ├── page.tsx     # Product list
     ├── products/[id]/
-    │   └── page.tsx # 상품 상세
+    │   └── page.tsx # Product detail
     └── cart/
-        └── page.tsx # 장바구니
+        └── page.tsx # Cart
 ```
 
-## 실행 방법
+## Getting Started
 
 ```bash
 pnpm install
@@ -91,22 +93,22 @@ pnpm dev
 
 Visit [http://localhost:3000](http://localhost:3000)
 
-## 결론
+## Conclusion
 
-### 언제 Recoil을 사용하면 좋을까?
+### When to Use Recoil?
 
-- **장기 유지보수가 중요한 프로젝트**: Meta 팀의 지원과 production 검증으로 안정성이 보장된다
-- **복잡한 상태 관리가 필요한 경우**: Snapshot, Atom Effects 등 advanced API가 필요한 경우
-- **이미 Recoil을 사용 중인 레거시 프로젝트**: 안정적으로 동작하고 있다면 굳이 마이그레이션할 필요는 없다
+- **Projects requiring long-term maintenance**: Stability guaranteed through Meta's support and production validation
+- **Complex state management needs**: When advanced APIs like Snapshot, Atom Effects are needed
+- **Legacy projects already using Recoil**: If it works stably, no need to migrate
 
-### 언제 Recoil을 피해야 할까?
+### When to Avoid Recoil?
 
-- **새로운 프로젝트를 시작하는 경우**: experimental 상태이며 최신 버전(Next.js 16, React 19) 지원이 안 된다
-- **빠르게 최신 기술 스택을 적용하는 팀**: Recoil의 버전 호환성 문제가 발목을 잡을 수 있다
-- **번들 사이즈가 중요한 경우**: Jotai가 4배 이상 가볍다
+- **Starting new projects**: Still experimental and doesn't support latest versions (Next.js 16, React 19)
+- **Teams rapidly adopting latest tech stack**: Recoil's version compatibility issues could be a bottleneck
+- **When bundle size matters**: Jotai is over 4 times lighter
 
-### 최종 의견
+### Final Opinion
 
-새로운 프로젝트에 atomic approach가 필요하다면 **Recoil보다 Jotai를 추천**한다. Recoil은 아직 experimental 단계이며 유지보수가 활발하지 않아 새로운 프로젝트에는 적합하지 않다.
+For new projects needing an atomic approach, I **recommend Jotai over Recoil**. Recoil is still experimental and not actively maintained, making it unsuitable for new projects.
 
-다만 Recoil은 Meta 팀의 지원과 production 검증을 통해 **안정성과 장기 유지보수 관점에서는 신뢰할 수 있는** 선택지다. 이미 사용 중이라면 문제없이 계속 사용할 수 있다.
+However, with Meta's support and production validation, Recoil is a **reliable choice from a stability and long-term maintenance perspective**. If you're already using it, you can continue without issues.

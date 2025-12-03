@@ -1,8 +1,10 @@
 # Jotai E-Commerce Example
 
-Jotai를 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
+[한국어](README.ko.md)
 
-> 이 프로젝트는 다양한 상태 관리 라이브러리(Redux, MobX, Zustand 등)를 비교하기 위한 시리즈 중 하나입니다.
+A simple e-commerce state management example using Jotai.
+
+> This project is part of a series comparing various state management libraries (Redux, MobX, Zustand, etc.).
 
 ## Tech Stack
 
@@ -13,50 +15,50 @@ Jotai를 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
 - TypeScript
 - Tailwind CSS
 
-## Jotai를 사용하면서 느낀 점
+## Impressions of Using Jotai
 
-### 1. 간편함
+### 1. Simplicity
 
-Jotai는 매우 간단하다. Redux처럼 action, reducer, dispatch 패턴을 따를 필요 없이, 단순히 `atom()`으로 상태를 정의하면 끝이다.
+Jotai is very simple. Unlike Redux's action, reducer, dispatch pattern, you just define state with `atom()` and you're done.
 
 ```typescript
-// 이게 전부다
+// That's all you need
 export const cartItems = atom<Cart>([]);
 ```
 
-보일러플레이트가 거의 없어서 작은 프로젝트부터 바로 적용하기 좋다.
+With almost no boilerplate, it's perfect for quickly applying to small projects.
 
-### 2. Getter와 Setter 분리
+### 2. Separation of Getters and Setters
 
-Jotai의 가장 마음에 들었던 부분이다. 읽기 전용 atom과 쓰기 전용 atom을 명확하게 분리할 수 있다:
+This is my favorite feature of Jotai. You can clearly separate read-only atoms from write-only atoms:
 
 ```typescript
-// Read-only (Getter) - 계산된 값
+// Read-only (Getter) - computed value
 export const totalQuantity = atom((get) => {
   const items = get(cartItems);
   return items.reduce((total, item) => total + item.quantity, 0);
 });
 
-// Write-only (Setter) - 상태 변경 로직
+// Write-only (Setter) - state update logic
 export const addToCart = atom(null, (get, set, product: Product) => {
   const items = get(cartItems);
-  // ... 로직
+  // ... logic
   set(cartItems, [...items, { product, quantity: 1 }]);
 });
 ```
 
-컴포넌트에서도 필요에 따라 분리해서 사용할 수 있다:
+You can also separate them in components as needed:
 
 ```typescript
-const quantity = useAtomValue(totalQuantity); // 읽기만
-const addCart = useSetAtom(addToCart); // 쓰기만
+const quantity = useAtomValue(totalQuantity); // read-only
+const addCart = useSetAtom(addToCart); // write-only
 ```
 
-이렇게 하면 불필요한 리렌더링을 방지할 수 있고, 코드의 의도가 명확해진다.
+This prevents unnecessary re-renders and makes the code's intent clear.
 
-### 3. SSR 지원
+### 3. SSR Support
 
-Next.js App Router와의 통합이 매끄럽다. `jotai/utils`의 `useHydrateAtoms`를 사용하면 서버에서 prefetch한 데이터로 atom을 초기화할 수 있다:
+Integration with Next.js App Router is seamless. Using `useHydrateAtoms` from `jotai/utils`, you can initialize atoms with server-prefetched data:
 
 ```typescript
 "use client";
@@ -69,37 +71,37 @@ export default function HydrateCartAtom({ children }) {
 }
 ```
 
-별도의 Provider 설정 없이도 동작하고, 필요할 때만 Provider를 추가하면 된다.
+It works without any Provider setup, and you only need to add a Provider when necessary.
 
-### 4. 작은 번들 사이즈
+### 4. Small Bundle Size
 
-Core 패키지가 매우 가볍다 (~5KB gzipped).
+The core package is very lightweight (~5KB gzipped).
 
-### 5. TypeScript 친화적
+### 5. TypeScript Friendly
 
-타입 추론이 잘 되어서 별도의 타입 정의 없이도 대부분 자동으로 처리된다.
+Type inference works well, automatically handling most cases without explicit type definitions.
 
-## 프로젝트 구조
+## Project Structure
 
 ```
 atoms/
-└── cart.ts          # 장바구니 관련 모든 atom 정의
+└── cart.ts          # All cart-related atom definitions
 
 components/
-├── Cart.tsx         # 장바구니 아이콘 (총 수량 표시)
-└── HydrateCartAtom.tsx  # SSR hydration 처리
+├── Cart.tsx         # Cart icon (displays total quantity)
+└── HydrateCartAtom.tsx  # SSR hydration handling
 
 app/
-├── layout.tsx       # 루트 레이아웃
+├── layout.tsx       # Root layout
 └── (app)/
-    ├── page.tsx     # 상품 목록
+    ├── page.tsx     # Product list
     ├── products/[id]/
-    │   └── page.tsx # 상품 상세
+    │   └── page.tsx # Product detail
     └── cart/
-        └── page.tsx # 장바구니
+        └── page.tsx # Cart
 ```
 
-## 실행 방법
+## Getting Started
 
 ```bash
 pnpm install
@@ -108,11 +110,11 @@ pnpm dev
 
 Visit [http://localhost:3000](http://localhost:3000)
 
-## 결론
+## Conclusion
 
-Jotai의 atomic한 approach를 통해 보일러플레이트가 거의 없이 바로 사용이 가능했다.
-또한 SSR hydration도 쉽게 지원해 어려움 없이 SSR도 구현할 수 있었다.
+Jotai's atomic approach enabled immediate use with almost no boilerplate.
+SSR hydration support was easy to implement without any difficulties.
 
-또 좋았던 점은 Derived atoms으로 기존 atom을 활용해 계산된 값을 따로 만들어 리렌더링을 최적화할 수 있었고, 방법도 매우 직관적이었다.
+Another great feature is derived atoms, which allow you to create computed values from existing atoms to optimize re-renders, and the approach is very intuitive.
 
-사용하진 못했지만 다양한 extension을 지원한다. (jotai-tanstack-query, jotai-immer 등)
+Although I didn't use them, Jotai supports various extensions (jotai-tanstack-query, jotai-immer, etc.).

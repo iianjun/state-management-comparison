@@ -1,8 +1,10 @@
 # Zustand E-Commerce Example
 
-Zustand를 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
+[한국어](README.ko.md)
 
-> 이 프로젝트는 다양한 상태 관리 라이브러리(Redux, MobX, Jotai 등)를 비교하기 위한 시리즈 중 하나입니다.
+A simple e-commerce state management example using Zustand.
+
+> This project is part of a series comparing various state management libraries (Redux, MobX, Jotai, etc.).
 
 ## Tech Stack
 
@@ -13,14 +15,14 @@ Zustand를 사용한 간단한 쇼핑몰 상태 관리 예제입니다.
 - TypeScript
 - Tailwind CSS
 
-## Zustand를 사용하면서 느낀 점
+## Impressions of Using Zustand
 
-### 1. 보일러플레이트가 거의 없음
+### 1. Almost No Boilerplate
 
-Zustand의 가장 큰 장점인것 같다. `create`로 store를 만들고 바로 사용하면 끝이다.
+This seems to be Zustand's biggest advantage. Create a store with `create` and start using it immediately.
 
 ```typescript
-// CSR 환경이라면 이게 전부다
+// For CSR environment, this is all you need
 export const useCartStore = create<CartStore>((set) => ({
   items: [],
   addToCart: (product, quantity) =>
@@ -29,48 +31,48 @@ export const useCartStore = create<CartStore>((set) => ({
     set((state) => ({ items: state.items.filter(item => item.product.id !== productId) })),
 }));
 
-// 컴포넌트에서 사용
+// Using in components
 const items = useCartStore((state) => state.items);
 const addToCart = useCartStore((state) => state.addToCart);
 ```
 
-Jotai/Recoil은 atom으로 각 상태를 Wrap하고 `useAtomValue`, `useSetAtom` 같은 전용 훅으로 "Unwrap"해야 하지만, Zustand는 selector 함수 하나로 필요한 상태나 함수를 직접 구독할 수 있다. 하나의 `use` 훅만 사용하면 되어서 훨씬 간편하다.
+While Jotai/Recoil require wrapping each state with atoms and "unwrapping" with dedicated hooks like `useAtomValue`, `useSetAtom`, Zustand lets you directly subscribe to the state or functions you need with a single selector function. Much more convenient with just one `use` hook.
 
-> **참고:** 이 프로젝트는 Next.js SSR 환경이라 `createStore`와 Context API를 사용했지만, CSR만 사용하거나 서버 데이터가 필요 없다면 위처럼 `create`만 써도 된다.
+> **Note:** This project uses `createStore` with Context API for Next.js SSR, but if you only need CSR or don't need server data, you can just use `create` as shown above.
 
-### 2. Selector를 통한 정밀한 리렌더링 제어
+### 2. Fine-grained Re-rendering Control via Selectors
 
-Zustand의 또 다른 장점은 selector를 통해 필요한 부분만 구독할 수 있다는 점이다.
+Another advantage of Zustand is subscribing to only what you need via selectors.
 
 ```typescript
-// items가 바뀔 때만 리렌더
+// Re-renders only when items change
 const items = useCartStore((state) => state.items);
 
-// addToCart 함수는 변하지 않으므로 리렌더 안 됨
+// No re-render as addToCart function doesn't change
 const addToCart = useCartStore((state) => state.addToCart);
 
-// ❌ 이렇게 하면 store의 모든 변경에 리렌더
+// ❌ This causes re-render on every store change
 const store = useCartStore();
 ```
 
-Jotai는 atom 단위로 자동 구독되지만, Zustand는 selector로 직접 제어할 수 있어서 더 세밀한 최적화가 가능하다.
+While Jotai auto-subscribes at the atom level, Zustand allows more granular optimization through direct selector control.
 
-### 3. 매우 작은 번들 사이즈
+### 3. Very Small Bundle Size
 
-Zustand는 ~603B (gzipped) 밖에 안 된다. 매우 가볍다.
+Zustand is only ~603B (gzipped). Very lightweight.
 
-### 4. TypeScript 친화적
+### 4. TypeScript Friendly
 
-타입 추론이 잘 되어서 별도의 타입 정의 없이도 자동으로 처리된다.
+Type inference works well, automatically handling types without explicit definitions.
 
 ```typescript
-const items = useCartStore((state) => state.items); // Cart 타입 자동 추론
-const addToCart = useCartStore((state) => state.addToCart); // 함수 시그니처 자동 추론
+const items = useCartStore((state) => state.items); // Cart type auto-inferred
+const addToCart = useCartStore((state) => state.addToCart); // Function signature auto-inferred
 ```
 
-### 5. 다양한 미들웨어 생태계
+### 5. Rich Middleware Ecosystem
 
-Zustand는 유용한 미들웨어들을 제공한다:
+Zustand provides useful middleware:
 
 ```typescript
 import { persist, devtools } from 'zustand/middleware';
@@ -82,61 +84,61 @@ export const useCartStore = create(
         items: [],
         addToCart: (product, quantity) => set(/*...*/),
       }),
-      { name: 'cart-storage' } // localStorage에 자동 저장
+      { name: 'cart-storage' } // Auto-save to localStorage
     )
   )
 );
 ```
 
-- `persist`: localStorage/sessionStorage 자동 저장
-- `devtools`: Redux DevTools 사용 가능
-- `immer`: 불변성 관리 간편화
+- `persist`: Auto-save to localStorage/sessionStorage
+- `devtools`: Use Redux DevTools
+- `immer`: Simplified immutability management
 
-이 프로젝트에서는 SSR 환경이라 사용하지 않았지만, CSR 환경이라면 매우 유용하다.
+Not used in this project due to SSR, but very useful in CSR environments.
 
-### 6. 높은 유연성
+### 6. High Flexibility
 
-Zustand는 유연해서 Redux를 좋아하는 사람도 Redux 패턴을 그대로 따라할 수 있다. 원하는 대로 store를 구성할 수 있는 자유도가 높다.
+Zustand is flexible enough that even Redux fans can follow Redux patterns. High degree of freedom in store composition.
 
-### 7. Derived State의 아쉬움
+### 7. Limitations with Derived State
 
-Jotai나 Recoil에서는 derived state(계산된 값)를 선언적으로 정의하고 재사용할 수 있다:
+In Jotai or Recoil, you can declaratively define and reuse derived state (computed values):
 
 ```typescript
-// Jotai의 경우
+// Jotai example
 export const totalQuantity = atom((get) => {
   const items = get(cartItems);
   return items.reduce((total, item) => total + item.quantity, 0);
 });
 ```
 
-하지만 Zustand는 selector 함수로 매번 계산하거나 커스텀 훅을 따로 만들어야 한다:
+But Zustand requires calculating in selector functions each time or creating custom hooks:
 
 ```typescript
-// 컴포넌트에서 직접 계산
+// Direct calculation in components
 const quantity = useCartStore((state) =>
   state.items.reduce((total, item) => total + item.quantity, 0)
 );
 ```
 
-이런 면에서는 계산 로직을 컴포넌트에서 처리하거나 별도 함수로 빼야 하기 때문에 좀 덜 직관적이고 덜 깔끔한 느낌이 있다.
+This feels less intuitive and clean as computation logic needs to be handled in components or extracted to separate functions.
 
-### 8. SSR 지원의 복잡성
+### 8. SSR Support Complexity
 
-**SSR + 서버 데이터 hydration**이 필요한 경우에는 Context API를 사용해야 한다. 이 경우 `create`가 아니라 `createStore`를 통해 store factory를 만들어야 한다:
+For **SSR + server data hydration**, you need to use Context API. This requires creating a store factory with `createStore` instead of `create`:
 
 ```typescript
-// Store factory 생성
+// Create store factory
 export const createCartStore = (initState: CartState = defaultInitState) => {
   return createStore<CartStore>((set) => ({
     // ...
   }));
 };
 
-// Provider 컴포넌트
+// Provider component
 export const CartStoreProvider = ({ children }: React.PropsWithChildren) => {
   const storeRef = useRef<CartStoreApi | null>(null);
-  const { data: cart } = useCarts(); // 서버에서 받은 데이터
+  const { data: cart } = useCarts(); // Server data
 
   if (storeRef.current === null) {
     storeRef.current = createCartStore({ items: cart }); // hydration
@@ -150,34 +152,34 @@ export const CartStoreProvider = ({ children }: React.PropsWithChildren) => {
 };
 ```
 
-Jotai의 `useHydrateAtoms`나 Recoil의 `RecoilRoot`를 통한 hydration보다 조금 더 복잡하다.
+This is slightly more complex than Jotai's `useHydrateAtoms` or Recoil's `RecoilRoot` hydration.
 
-> **참고:** Next.js를 사용하더라도 서버 데이터가 필요 없는 store라면 그냥 `create`만 써도 된다. 예를 들어 UI 상태(모달 열림/닫힘, 테마 등)만 관리한다면 Context API 없이 사용 가능하다.
+> **Note:** Even with Next.js, if your store doesn't need server data, you can just use `create`. For example, for UI state only (modal open/close, theme, etc.), you can use it without Context API.
 
-## 프로젝트 구조
+## Project Structure
 
 ```
 stores/
-└── cart.ts              # 장바구니 store factory
+└── cart.ts              # Cart store factory
 
 providers/
-└── cart-store-provider.tsx  # SSR을 위한 Context Provider
+└── cart-store-provider.tsx  # Context Provider for SSR
 
 components/
-└── Cart.tsx             # 장바구니 아이콘 (총 수량 표시)
+└── Cart.tsx             # Cart icon (displays total quantity)
 
 app/
-├── layout.tsx           # 루트 레이아웃
+├── layout.tsx           # Root layout
 └── (app)/
-    ├── layout.tsx       # CartStoreProvider 적용
-    ├── page.tsx         # 상품 목록
+    ├── layout.tsx       # Apply CartStoreProvider
+    ├── page.tsx         # Product list
     ├── products/[id]/
-    │   └── page.tsx     # 상품 상세
+    │   └── page.tsx     # Product detail
     └── cart/
-        └── page.tsx     # 장바구니
+        └── page.tsx     # Cart
 ```
 
-## 실행 방법
+## Getting Started
 
 ```bash
 pnpm install
@@ -186,10 +188,10 @@ pnpm dev
 
 Visit [http://localhost:3000](http://localhost:3000)
 
-## 결론
+## Conclusion
 
-Zustand는 보일러플레이트가 거의 없고 매우 가볍다는 점에서 훌륭한 상태 관리 라이브러리다. Selector를 통한 구독 방식이 직관적이고, 하나의 훅으로 모든 것을 처리할 수 있어 사용이 간편하다.
+Zustand is an excellent state management library with almost no boilerplate and being very lightweight. The subscription pattern via selectors is intuitive, and handling everything with a single hook is convenient.
 
-다만 derived state를 선언적으로 정의할 수 없어 계산 로직이 컴포넌트에 분산되는 경향이 있고, SSR 환경에서는 Context API 패턴을 적용해야 해서 다른 라이브러리보다 조금 더 복잡한 설정이 필요하다.
+However, the inability to declaratively define derived state means computation logic tends to be scattered across components, and SSR environments require implementing Context API patterns, making it slightly more complex than other libraries.
 
-유연성과 단순함을 중시하고, derived state의 선언적 정의가 크게 중요하지 않은 프로젝트라면 Zustand가 좋은 선택이 될 것 같다.
+For projects that value flexibility and simplicity, where declarative derived state definition isn't critical, Zustand seems like a good choice.
