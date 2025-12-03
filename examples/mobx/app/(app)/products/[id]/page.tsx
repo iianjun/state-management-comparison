@@ -1,5 +1,6 @@
 "use client";
 
+import { cartStore } from "@/stores/cart";
 import {
   CartBottomBar,
   ProductCard,
@@ -29,7 +30,10 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
           </div>
         </div>
       </ProductCard>
-      <CartBottomBar price={product.price * quantity} onCart={() => {}} />
+      <CartBottomBar
+        price={product.price * quantity}
+        onCart={() => cartStore.addToCart(product, quantity)}
+      />
     </div>
   );
 }

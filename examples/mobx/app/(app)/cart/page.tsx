@@ -1,10 +1,17 @@
 "use client";
-import { CartCheckoutBottomBar } from "@repo/shared";
-export default function CartPage() {
+import { cartStore } from "@/stores/cart";
+import {
+  CartCheckoutBottomBar,
+  ProductCard,
+  QuantitySelector,
+} from "@repo/shared";
+import { observer } from "mobx-react-lite";
+export default observer(function CartPage() {
   return (
     <div className="min-h-screen pb-32">
       <div className="space-y-4 p-4">
-        {/* <ProductCard
+        {cartStore.items.map((item) => (
+          <ProductCard
             key={item.product.id}
             product={item.product}
             className="flex gap-4 border-b border-gray-200 pb-4">
@@ -20,17 +27,18 @@ export default function CartPage() {
                 className="w-fit"
                 value={item.quantity}
                 onChange={(quantity) =>
-                  updateQuantityValue(item.product.id, quantity)
+                  cartStore.updateQuantity(item.product.id, quantity)
                 }
                 size="sm"
               />
             </div>
             <ProductCard.Delete
-              onDelete={() => deleteCartItem(item.product.id)}
+              onDelete={() => cartStore.removeFromCart(item.product.id)}
             />
-          </ProductCard> */}
+          </ProductCard>
+        ))}
       </div>
-      <CartCheckoutBottomBar total={0} shipping={0} />
+      <CartCheckoutBottomBar total={cartStore.totalPrice} shipping={0} />
     </div>
   );
-}
+});
