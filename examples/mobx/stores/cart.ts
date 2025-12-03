@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, computed } from "mobx";
 import { Cart as CartType, Product } from "@repo/shared";
 class Cart {
   items: CartType = [];
@@ -6,6 +6,8 @@ class Cart {
   constructor() {
     makeObservable(this, {
       items: observable,
+      totalQuantity: computed,
+      totalPrice: computed,
       addToCart: action,
       removeFromCart: action,
       updateQuantity: action,
