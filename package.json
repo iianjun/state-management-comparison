@@ -8,6 +8,7 @@
     "dev:recoil": "turbo run dev --filter=server --filter=recoil",
     "dev:zustand": "turbo run dev --filter=server --filter=zustand",
     "dev:mobx": "turbo run dev --filter=server --filter=mobx",
+    "dev:redux": "turbo run dev --filter=server --filter=redux",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
