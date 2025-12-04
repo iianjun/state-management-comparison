@@ -1,9 +1,17 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useRef } from "react";
 import { Provider } from "react-redux";
-import { store } from "@/stores";
+import { AppStore, makeStore } from "@/stores";
+import { useCarts } from "@repo/shared";
+import { initializeCart } from "@/stores/slices/cartSlice";
 
 export default function RootProvider({ children }: PropsWithChildren) {
-  return <Provider store={store}>{children}</Provider>;
+  const storeRef = useRef<AppStore>(null);
+  const { data: cart } = useCarts();
+  if (!storeRef.current) {
+    storeRef.current = makeStore();
+    storeRef.current.dispatch(initializeCart(cart ?? []));
+  }
+  return <Provider store={storeRef.current}>{children}</Provider>;
 }
