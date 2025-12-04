@@ -8,6 +8,10 @@ export const cartStore = proxy<CartState>({
   items: [],
 });
 
+export const initializeCart = (cart: Cart) => {
+  cartStore.items = cart;
+};
+
 // Actions is using cartStore directly
 export const addToCart = (product: Product, quantity: number) => {
   const existingItem = cartStore.items.find(
