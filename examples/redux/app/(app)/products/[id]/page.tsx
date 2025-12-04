@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppDispatch } from "@/stores/hooks";
+import { addToCart } from "@/stores/slices/cartSlice";
 import {
   CartBottomBar,
   ProductCard,
@@ -12,6 +14,8 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
   const { id } = use(params);
   const { data: product } = useProduct(id);
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useAppDispatch();
+
   return (
     <div className="pb-28">
       <ProductCard product={product}>
@@ -29,7 +33,10 @@ export default function Page({ params }: PageProps<"/products/[id]">) {
           </div>
         </div>
       </ProductCard>
-      <CartBottomBar price={product.price * quantity} onCart={() => {}} />
+      <CartBottomBar
+        price={product.price * quantity}
+        onCart={() => dispatch(addToCart({ product, quantity }))}
+      />
     </div>
   );
 }

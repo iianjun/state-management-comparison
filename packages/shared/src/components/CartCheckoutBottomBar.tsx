@@ -16,7 +16,7 @@ export function CartCheckoutBottomBar({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Subtotal</span>
-          <span>${total}</span>
+          <span>${total.toFixed(2)}</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-gray-500">Shipping</span>
