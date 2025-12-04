@@ -9,6 +9,7 @@
     "dev:zustand": "turbo run dev --filter=server --filter=zustand",
     "dev:mobx": "turbo run dev --filter=server --filter=mobx",
     "dev:redux": "turbo run dev --filter=server --filter=redux",
+    "dev:valtio": "turbo run dev --filter=server --filter=valtio",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
