@@ -1,6 +1,4 @@
-import { type Product } from "@repo/shared";
-
-export const products: Product[] = [
+export const products = [
   {
     id: 1,
     name: "Premium Running Shoes",
