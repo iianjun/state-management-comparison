@@ -1,135 +1,195 @@
-# Turborepo starter
+# State Management Comparison
 
-This Turborepo starter is maintained by the Turborepo core team.
+[한국어](README.ko.md)
 
-## Using this example
+A monorepo project to compare and learn various state management libraries.
 
-Run the following command:
+This project implements a simple E-Commerce website with shopping cart functionality using different state management libraries for comparison.
 
-```sh
-npx create-turbo@latest
-```
+## Overview
 
-## What's inside?
+This project allows you to experience and compare the characteristics and pros/cons of various state management libraries by implementing the same functionality (shopping cart) with different libraries.
 
-This Turborepo includes the following packages/apps:
+## Tech Stack
 
-### Apps and Packages
+- **Build Tool**: [Turborepo](https://turborepo.org/)
+- **Package Manager**: pnpm
+- **Styling**: Tailwind CSS 4
+- **TypeScript**: TypeScript 5.9
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Project Structure
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+state-management-comparison/
+├── examples/              # State management library examples
+│   ├── jotai/            # Jotai example
+│   ├── mobx/             # MobX example
+│   ├── recoil/           # Recoil example
+│   ├── redux/            # Redux Toolkit example
+│   ├── valtio/           # Valtio example
+│   ├── zustand/          # Zustand example
+│   └── server/           # API server
+├── packages/             # Shared packages
+│   ├── shared/           # Common components and utilities
+│   ├── eslint-config/    # ESLint configuration
+│   └── typescript-config/ # TypeScript configuration
+└── templates/            # Project templates
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### Example Structure
+
+Each state management library example has the following structure:
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+example/
+├── app/              # Next.js App Router pages
+├── components/       # Components
+├── stores/           # State management stores (zustand, mobx, redux, valtio)
+├── atoms/            # Atom definitions (jotai, recoil)
+└── providers/        # Provider components
 ```
 
-### Develop
+## Getting Started
 
-To develop all apps and packages, run the following command:
+### Prerequisites
 
-```
-cd my-turborepo
+- Node.js 20.9 or higher
+- pnpm 10.13.1 or higher
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+### Installation
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+1. Clone the repository:
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+git clone <repository-url>
+cd state-management-comparison
 ```
 
-### Remote Caching
+2. Install dependencies:
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+pnpm install
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+### Running Development Server
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+You can run the development server for each state management library:
 
+```bash
+# Run Jotai example
+pnpm dev:jotai
+
+# Run Recoil example
+pnpm dev:recoil
+
+# Run Zustand example
+pnpm dev:zustand
+
+# Run MobX example
+pnpm dev:mobx
+
+# Run Redux example
+pnpm dev:redux
+
+# Run Valtio example
+pnpm dev:valtio
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+Each command runs both the example app and the API server.
+
+- Example app: `http://localhost:3000`
+- API server: `http://localhost:4000`
+
+### Build All Apps
+
+```bash
+pnpm build
 ```
 
-## Useful Links
+### Code Formatting
 
-Learn more about the power of Turborepo:
+```bash
+pnpm format
+```
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+### Type Checking
+
+```bash
+pnpm check-types
+```
+
+## State Management Libraries
+
+| Library | Next.js | React | Features | Learning Curve |
+|---------|---------|-------|----------|----------------|
+| **[Zustand](examples/zustand/README.md)** | 16.0.7 | 19.2.1 | Simple and lightweight API, Flux principles | ⭐ Easy |
+| **[Jotai](examples/jotai/README.md)** | 16.0.7 | 19.2.1 | Atomic state management, Bottom-up approach | ⭐ Easy |
+| **[Recoil](examples/recoil/README.md)** | 14.2.33 | 18.2.0 | Atomic state management, Developed by Facebook | ⭐⭐ Medium |
+| **[Valtio](examples/valtio/README.md)** | 16.0.7 | 19.2.1 | Proxy-based, Mutable style | ⭐⭐ Medium |
+| **[MobX](examples/mobx/README.md)** | 16.0.7 | 19.2.1 | Reactive programming, Observable pattern | ⭐⭐⭐ Hard |
+| **[Redux Toolkit](examples/redux/README.md)** | 16.0.7 | 19.2.1 | Official Redux toolset, Powerful DevTools | ⭐⭐⭐ Hard |
+
+> **Note**: Recoil doesn't officially support React 19 yet, so it uses React 18.2.0 and Next.js 14.2.33.
+
+## Common Features
+
+All examples implement the following features:
+
+- Product list display
+- Add products to cart
+- Adjust product quantity in cart
+- Remove products from cart
+- Calculate cart total
+
+## Adding New Examples
+
+To add a new state management library example:
+
+1. Run the Turborepo generator:
+
+```bash
+pnpm turbo gen
+```
+
+2. Follow the prompts to enter:
+   - Name of the state management library (e.g., `nanostores`, `xstate`, etc.)
+   - A basic Next.js template will be generated automatically
+
+3. Navigate to the generated example directory and install the required state management library:
+
+```bash
+cd examples/[library-name]
+pnpm add [state-management-library]
+```
+
+4. Add a development script to the root [package.json](package.json):
+
+```json
+{
+  "scripts": {
+    "dev:[library-name]": "turbo run dev --filter=server --filter=[library-name]"
+  }
+}
+```
+
+5. Implement state management logic:
+   - Define state in `stores/` or `atoms/` directory
+   - Create UI components in `components/`
+   - Add providers in `providers/` if needed
+
+## Useful Scripts
+
+```bash
+# Run development server for a specific package
+pnpm --filter=jotai dev
+
+# Build a specific package
+pnpm --filter=zustand build
+
+# Run lint
+pnpm lint
+```
+
+## License
+
+MIT
